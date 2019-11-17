@@ -4,7 +4,7 @@ import * as ReactDOM from "react-dom";
 
 // Redux
 import { Provider } from "react-redux";
-import store from "./store";
+import { store } from "./store";
 
 // Firebase
 import "./firebase/main";
@@ -14,7 +14,7 @@ import { App } from "./components/App";
 
 ReactDOM.render(
   <Provider store={store}>
-    <App compiler="TypeScript" framework="React" />
+    <App />
   </Provider>,
   document.getElementById("root")
 );
