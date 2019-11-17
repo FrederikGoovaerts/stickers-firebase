@@ -48,7 +48,6 @@ module.exports = {
   },
   externals: {
     firebase: "firebase",
-    firebaseui: "firebaseui",
     react: "React",
     "react-dom": "ReactDOM"
   }
