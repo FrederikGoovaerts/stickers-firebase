@@ -45,5 +45,11 @@ module.exports = {
     splitChunks: {
       chunks: "all"
     }
+  },
+  externals: {
+    firebase: "firebase",
+    firebaseui: "firebaseui",
+    react: "React",
+    "react-dom": "ReactDOM"
   }
 };
