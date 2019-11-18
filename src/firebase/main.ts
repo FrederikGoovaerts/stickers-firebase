@@ -1,28 +1,42 @@
 // Load main components
 import * as firebase from "firebase";
 
-import { FIREBASE_CONFIG } from "../configuration/firebase";
+export class FirebaseWrapper {
+  private _firebaseInstance: firebase.app.App;
+  private _user: firebase.User | undefined;
+  private _authCallback: ((param: boolean) => void) | undefined;
 
-firebase.initializeApp(FIREBASE_CONFIG);
-
-firebase.auth().onAuthStateChanged(user => {
-  if (user) {
-    console.log(firebase.auth().currentUser?.displayName);
-  } else {
-    firebase
-      .auth()
-      .signInWithPopup(new firebase.auth.GoogleAuthProvider())
-      .then(result => {
-        // @ts-ignore
-        const user = result.user;
-        console.log(user);
-      })
-      .catch(error => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        var email = error.email;
-        var credential = error.credential;
-        console.log(errorCode);
-      });
+  constructor(firebaseConfig: Object) {
+    this._firebaseInstance = firebase.initializeApp(firebaseConfig);
+    this._firebaseInstance.auth().onAuthStateChanged(user => {
+      console.log("auth change", !!user);
+      const authenticated = !!user;
+      if (user) {
+        this._user = user;
+      }
+      this._authCallback?.(authenticated);
+    });
   }
-});
+
+  get authenticated(): boolean {
+    return !!this._user;
+  }
+
+  get user(): firebase.User | undefined {
+    return this._user;
+  }
+
+  setAuthCallback(callback: ((param: boolean) => void) | undefined) {
+    this._authCallback = callback;
+  }
+
+  async logIn() {
+    await this._firebaseInstance
+      .auth()
+      .signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  }
+
+  async logOut() {
+    await this._firebaseInstance.auth().signOut();
+  }
+}

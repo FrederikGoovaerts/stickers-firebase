@@ -3,9 +3,15 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 
 // Firebase
-import "./firebase/main";
+import { FirebaseWrapper } from "./firebase/main";
+import { FIREBASE_CONFIG } from "./configuration/firebase";
+
+const stickersFirebase = new FirebaseWrapper(FIREBASE_CONFIG);
 
 // Application
 import { App } from "./components/App";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(
+  <App firebase={stickersFirebase} />,
+  document.getElementById("root")
+);
