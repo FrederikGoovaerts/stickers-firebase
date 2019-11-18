@@ -1,5 +1,7 @@
 import * as React from "react";
 import { FirebaseWrapper } from "../firebase/main";
+import { LandingPage } from "./LandingPage";
+import { MainPage } from "./MainPage";
 
 interface AppProps {
   firebase: FirebaseWrapper;
@@ -20,14 +22,10 @@ export class App extends React.Component<AppProps, AppState> {
   }
 
   render() {
-    const logIn = () => this.props.firebase.logIn();
-    const logOut = () => this.props.firebase.logOut();
-    return (
-      <div>
-        <h1>{this.state.authenticated ? "authed" : "not authed"}</h1>
-        <button onClick={logIn}>Log in</button>
-        <button onClick={logOut}>Log out</button>
-      </div>
-    );
+    if (!this.state.authenticated) {
+      const logIn = () => this.props.firebase.logIn();
+      return <LandingPage logIn={logIn} />;
+    }
+    return <MainPage firebase={this.props.firebase} />;
   }
 }
