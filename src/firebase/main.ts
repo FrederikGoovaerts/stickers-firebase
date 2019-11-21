@@ -2,14 +2,15 @@
 import * as firebase from "firebase";
 
 interface Log {
-  uid: string;
   credits: number;
   log: string;
 }
 
 interface Spending {
-  uid: string;
   credits: number;
+  recordDate: {
+    seconds: number;
+  };
 }
 
 export class FirebaseWrapper {
@@ -38,6 +39,31 @@ export class FirebaseWrapper {
     return this._user;
   }
 
+  private getUserItems(col: string): Promise<firebase.firestore.QuerySnapshot> {
+    if (!this._user) {
+      return Promise.reject();
+    }
+    return this._firestore
+      .collection(col)
+      .where("uid", "==", this._user.uid)
+      .get();
+  }
+
+  private getLatestUserItems(
+    col: string,
+    amount: number
+  ): Promise<firebase.firestore.QuerySnapshot> {
+    if (!this._user) {
+      return Promise.reject();
+    }
+    return this._firestore
+      .collection(col)
+      .where("uid", "==", this._user.uid)
+      .orderBy("recordDate")
+      .limit(amount)
+      .get();
+  }
+
   setAuthCallback(callback: ((param: boolean) => void) | undefined) {
     this._authCallback = callback;
   }
@@ -46,29 +72,34 @@ export class FirebaseWrapper {
     if (!this._user) {
       return Promise.reject();
     }
-    const logs = await this._firestore
-      .collection("logs")
-      .where("uid", "==", this._user.uid)
-      .get();
+    const logs = await this.getLatestUserItems("logs", amount);
     return logs.docs.map(value => (value.data() as Log).log);
   }
 
-  async getAvailableCredits(): Promise<number> {
+  async getLastSpendings(amount: number): Promise<string[]> {
     if (!this._user) {
       return Promise.reject();
     }
-    const logs = await this._firestore
-      .collection("logs")
-      .where("uid", "==", this._user.uid)
-      .get();
+    const logs = await this.getLatestUserItems("spending", amount);
+    const res = logs.docs
+      .map(value => value.data() as Spending)
+      .map(
+        value =>
+          `${new Date(value.recordDate.seconds * 1000)} - ${value.credits}`
+      );
+    console.log(res);
+    return res;
+  }
+
+  async getAvailableCredits(): Promise<number> {
+    const logs = await this.getUserItems("logs");
     const creditsClaimed = logs.docs
-      .map(value => (value.data() as Log).credits)
+      .map(value => {
+        return (value.data() as Log).credits;
+      })
       .reduce((prev, curr) => prev + curr);
 
-    const spendings = await this._firestore
-      .collection("spending")
-      .where("uid", "==", this._user.uid)
-      .get();
+    const spendings = await this.getUserItems("spending");
     const creditsSpent = spendings.docs
       .map(value => (value.data() as Spending).credits)
       .reduce((prev, curr) => prev + curr);
