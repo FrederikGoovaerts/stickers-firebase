@@ -5,8 +5,8 @@ interface LandingPageProps {
 }
 
 export const LandingPage = (props: LandingPageProps) => (
-  <div className="landing_page__container">
-    <button className="landing_page__login_button" onClick={props.logIn}>
+  <div className="landingPage_container">
+    <button className="landingPage_loginButton" onClick={props.logIn}>
       Log in
     </button>
   </div>
