@@ -10,8 +10,10 @@ interface MainPageProps {
 interface MainPageState {
   logInput: string;
   logError: string | undefined;
+  lastLogs: string[];
   spendInput: string;
   spendError: string | undefined;
+  lastSpendings: string[];
   availableCredits: number;
 }
 
@@ -21,17 +23,26 @@ export class MainPage extends React.Component<MainPageProps, MainPageState> {
     this.state = {
       spendInput: "",
       spendError: undefined,
+      lastSpendings: [],
       logInput: "",
       logError: undefined,
+      lastLogs: [],
       availableCredits: 0
     };
     this.updateCredits();
+    this.updateLatestSpendings();
   }
 
   updateCredits() {
     this.props.firebase
       .getAvailableCredits()
       .then(val => this.setState({ availableCredits: val }));
+  }
+
+  updateLatestSpendings() {
+    this.props.firebase
+      .getLastSpendings(5)
+      .then(val => this.setState({ lastSpendings: val }));
   }
 
   onLogInputChange = (event: React.ChangeEvent<HTMLInputElement>) =>
@@ -101,6 +112,9 @@ export class MainPage extends React.Component<MainPageProps, MainPageState> {
             <button onClick={this.spend}>Spend my credits!</button>
             <div>
               <span>Latest spending:</span>
+              {this.state.lastSpendings.map(val => (
+                <span key={val}>{val}</span>
+              ))}
             </div>
           </div>
         </div>
