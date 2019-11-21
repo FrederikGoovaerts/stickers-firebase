@@ -43,13 +43,14 @@ export class FirebaseWrapper {
     return logs.docs.map((value: any) => value.data().log);
   }
 
-  async addLog(log: string): Promise<void> {
+  async addLog(log: string, credits: number): Promise<void> {
     if (!this._user) {
       return Promise.resolve();
     }
     this._firestore.collection("logs").add({
+      log,
+      credits,
       uid: this._user.uid,
-      log: log,
       recordDate: firebase.firestore.Timestamp.fromDate(new Date())
     });
   }
