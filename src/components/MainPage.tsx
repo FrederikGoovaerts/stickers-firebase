@@ -1,6 +1,7 @@
 import * as React from "react";
 import { isInteger, toNumber } from "lodash";
 
+import "./MainPage.scss";
 import { FirebaseWrapper } from "../firebase/main";
 
 interface MainPageProps {
@@ -42,13 +43,13 @@ export class MainPage extends React.Component<MainPageProps, MainPageState> {
 
   updateLatestLogs() {
     this.props.firebase
-      .getLastLogs(5)
+      .getLastLogs(3)
       .then(val => this.setState({ lastLogs: val }));
   }
 
   updateLatestSpendings() {
     this.props.firebase
-      .getLastSpendings(5)
+      .getLastSpendings(3)
       .then(val => this.setState({ lastSpendings: val }));
   }
 
@@ -109,7 +110,7 @@ export class MainPage extends React.Component<MainPageProps, MainPageState> {
               onChange={this.onLogInputChange}
             />
             <button onClick={this.log}>Claim my credits!</button>
-            <div>
+            <div className="latest">
               <span>Latest logs:</span>
               {this.state.lastLogs.map((val, index) => (
                 <span key={index}>{val}</span>
@@ -122,7 +123,7 @@ export class MainPage extends React.Component<MainPageProps, MainPageState> {
               onChange={this.onSpendInputChange}
             />
             <button onClick={this.spend}>Spend my credits!</button>
-            <div>
+            <div className="latest">
               <span>Latest spending:</span>
               {this.state.lastSpendings.map((val, index) => (
                 <span key={index}>{val}</span>

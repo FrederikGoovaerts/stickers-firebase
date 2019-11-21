@@ -73,7 +73,9 @@ export class FirebaseWrapper {
       return Promise.reject();
     }
     const logs = await this.getLatestUserItems("logs", amount);
-    return logs.docs.map(value => (value.data() as Log).log);
+    return logs.docs.map(
+      value => (value.data({ serverTimestamps: "estimate" }) as Log).log
+    );
   }
 
   async getLastSpendings(amount: number): Promise<string[]> {
@@ -82,7 +84,7 @@ export class FirebaseWrapper {
     }
     const logs = await this.getLatestUserItems("spending", amount);
     return logs.docs
-      .map(value => value.data() as Spending)
+      .map(value => value.data({ serverTimestamps: "estimate" }) as Spending)
       .map(
         value =>
           `${new Date(value.recordDate.seconds * 1000).toLocaleDateString()}: ${

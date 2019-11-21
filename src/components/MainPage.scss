@@ -1,0 +1,26 @@
+.mainPage_container {
+  .mainPage_bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    height: 5vh;
+  }
+  .mainPage_credits {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 40vh;
+  }
+  .mainPage_logging {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+    height: 55vh;
+    .latest {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}

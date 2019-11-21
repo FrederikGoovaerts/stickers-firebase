@@ -10,6 +10,7 @@ const stickersFirebase = new FirebaseWrapper(FIREBASE_CONFIG);
 
 // Application
 import { App } from "./components/App";
+import "./index.scss";
 
 ReactDOM.render(
   <App firebase={stickersFirebase} />,
