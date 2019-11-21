@@ -32,6 +32,28 @@ export class FirebaseWrapper {
     this._authCallback = callback;
   }
 
+  async getLogs(): Promise<string[]> {
+    if (!this._user) {
+      return Promise.resolve([]);
+    }
+    const logs = await this._firestore
+      .collection("logs")
+      .where("uid", "==", this._user.uid)
+      .get();
+    return logs.docs.map((value: any) => value.data().log);
+  }
+
+  async addLog(log: string): Promise<void> {
+    if (!this._user) {
+      return Promise.resolve();
+    }
+    this._firestore.collection("logs").add({
+      uid: this._user.uid,
+      log: log,
+      recordDate: firebase.firestore.Timestamp.fromDate(new Date())
+    });
+  }
+
   async logIn() {
     await this._firebaseInstance
       .auth()
