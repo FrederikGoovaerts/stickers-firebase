@@ -47,7 +47,7 @@ export class FirebaseWrapper {
     if (!this._user) {
       return Promise.resolve();
     }
-    this._firestore.collection("logs").add({
+    await this._firestore.collection("logs").add({
       log,
       credits,
       uid: this._user.uid,
