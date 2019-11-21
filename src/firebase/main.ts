@@ -59,7 +59,7 @@ export class FirebaseWrapper {
     return this._firestore
       .collection(col)
       .where("uid", "==", this._user.uid)
-      .orderBy("recordDate")
+      .orderBy("recordDate", "desc")
       .limit(amount)
       .get();
   }
@@ -81,14 +81,14 @@ export class FirebaseWrapper {
       return Promise.reject();
     }
     const logs = await this.getLatestUserItems("spending", amount);
-    const res = logs.docs
+    return logs.docs
       .map(value => value.data() as Spending)
       .map(
         value =>
-          `${new Date(value.recordDate.seconds * 1000)} - ${value.credits}`
+          `${new Date(value.recordDate.seconds * 1000).toLocaleDateString()}: ${
+            value.credits
+          } Credits`
       );
-    console.log(res);
-    return res;
   }
 
   async getAvailableCredits(): Promise<number> {
