@@ -3,6 +3,7 @@ import * as firebase from "firebase";
 
 export class FirebaseWrapper {
   private _firebaseInstance: firebase.app.App;
+  private _firestore: firebase.firestore.Firestore;
   private _user: firebase.User | undefined;
   private _authCallback: ((param: boolean) => void) | undefined;
 
@@ -16,6 +17,7 @@ export class FirebaseWrapper {
       }
       this._authCallback?.(authenticated);
     });
+    this._firestore = this._firebaseInstance.firestore();
   }
 
   get authenticated(): boolean {
