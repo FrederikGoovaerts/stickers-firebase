@@ -25,6 +25,8 @@
       font-weight: 500;
       cursor: pointer;
       background-color: index.$theme-blue;
+
+      box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
       &:hover {
         color: white;
         background-color: index.$theme-blue-dark;
@@ -36,5 +38,6 @@
     display: flex;
     height: 20vh;
     background-color: index.$theme-brown-light;
+    box-shadow: 0px -10px 20px 0px rgba(0, 0, 0, 0.3);
   }
 }

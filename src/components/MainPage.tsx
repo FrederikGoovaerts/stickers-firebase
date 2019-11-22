@@ -105,27 +105,33 @@ export class MainPage extends React.Component<MainPageProps, MainPageState> {
         </div>
         <div className="spacing" />
         <div className="logging">
-          <div className="logger">
-            <input
-              value={this.state.logInput}
-              onChange={this.onLogInputChange}
-            />
+          <div className="logger formcard">
+            <div>
+              <span>Log for day:</span>
+              <input
+                value={this.state.logInput}
+                onChange={this.onLogInputChange}
+              />
+            </div>
             <button onClick={this.log}>Claim my credits!</button>
             <div className="latest">
-              <span>Latest logs:</span>
+              <span>Latest three logs:</span>
               {this.state.lastLogs.map((val, index) => (
                 <span key={index}>{val}</span>
               ))}
             </div>
           </div>
-          <div className="spender">
-            <input
-              value={this.state.spendInput}
-              onChange={this.onSpendInputChange}
-            />
+          <div className="spending formcard">
+            <div>
+              <span>Amount to spend:</span>
+              <input
+                value={this.state.spendInput}
+                onChange={this.onSpendInputChange}
+              />
+            </div>
             <button onClick={this.spend}>Spend my credits!</button>
             <div className="latest">
-              <span>Latest spending:</span>
+              <span>Latest three spendings:</span>
               {this.state.lastSpendings.map((val, index) => (
                 <span key={index}>{val}</span>
               ))}
