@@ -97,14 +97,15 @@ export class MainPage extends React.Component<MainPageProps, MainPageState> {
   render() {
     return (
       <div className="mainPage_container">
-        <div className="mainPage_bar">
+        <div className="bar">
           <button onClick={this.logOut}>Log out</button>
         </div>
-        <div className="mainPage_credits">
+        <div className="credits">
           <h1>Sticker credits: {this.state.availableCredits}</h1>
         </div>
-        <div className="mainPage_logging">
-          <div className="mainPage_logger">
+        <div className="spacing" />
+        <div className="logging">
+          <div className="logger">
             <input
               value={this.state.logInput}
               onChange={this.onLogInputChange}
@@ -117,7 +118,7 @@ export class MainPage extends React.Component<MainPageProps, MainPageState> {
               ))}
             </div>
           </div>
-          <div className="mainPage_spender">
+          <div className="spender">
             <input
               value={this.state.spendInput}
               onChange={this.onSpendInputChange}

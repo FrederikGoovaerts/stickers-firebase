@@ -1,23 +1,53 @@
+@use '../index';
+
 .mainPage_container {
-  .mainPage_bar {
+  > .bar {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     height: 5vh;
+    background-color: index.$theme-blue;
+
+    button {
+      border: none;
+      font-weight: 700;
+      color: white;
+      background-color: index.$theme-blue-dark;
+      cursor: pointer;
+      &:hover {
+        background-color: index.$theme-blue-light;
+        color: index.$theme-blue-dark;
+      }
+    }
   }
-  .mainPage_credits {
+  > .credits {
+    > h1 {
+      font-size: 5em;
+      font-weight: 500;
+    }
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     height: 40vh;
+    background-color: index.$theme-blue-light;
   }
-  .mainPage_logging {
+
+  > .spacing {
+    height: 5vh;
+    background-color: index.$theme-brown-light;
+  }
+
+  .logging {
+    font-weight: 500;
+    background: url("../assets/back1.png");
+    // background-color: index.$theme-brown;
+    background-repeat: repeat;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: flex-start;
-    height: 55vh;
+    height: 50vh;
     .latest {
       display: flex;
       flex-direction: column;
