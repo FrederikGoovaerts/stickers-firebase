@@ -115,7 +115,7 @@ export class MainPage extends React.Component<MainPageProps, MainPageState> {
             </div>
             <button onClick={this.log}>Claim my credits!</button>
             <div className="latest">
-              <span>Latest three logs:</span>
+              <span className="title">Latest three logs:</span>
               {this.state.lastLogs.map((val, index) => (
                 <span key={index}>{val}</span>
               ))}
@@ -131,7 +131,7 @@ export class MainPage extends React.Component<MainPageProps, MainPageState> {
             </div>
             <button onClick={this.spend}>Spend my credits!</button>
             <div className="latest">
-              <span>Latest three spendings:</span>
+              <span className="title">Latest three spendings:</span>
               {this.state.lastSpendings.map((val, index) => (
                 <span key={index}>{val}</span>
               ))}

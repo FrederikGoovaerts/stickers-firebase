@@ -87,9 +87,9 @@ export class FirebaseWrapper {
       .map(value => value.data({ serverTimestamps: "estimate" }) as Spending)
       .map(
         value =>
-          `${new Date(value.recordDate.seconds * 1000).toLocaleDateString()}: ${
-            value.credits
-          } Credits`
+          `${value.credits} credits on ${new Date(
+            value.recordDate.seconds * 1000
+          ).toLocaleDateString()}`
       );
   }
 
