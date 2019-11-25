@@ -99,12 +99,12 @@ export class FirebaseWrapper {
       .map(value => {
         return (value.data() as Log).credits;
       })
-      .reduce((prev, curr) => prev + curr);
+      .reduce((prev, curr) => prev + curr, 0);
 
     const spendings = await this.getUserItems("spending");
     const creditsSpent = spendings.docs
       .map(value => (value.data() as Spending).credits)
-      .reduce((prev, curr) => prev + curr);
+      .reduce((prev, curr) => prev + curr, 0);
 
     return creditsClaimed - creditsSpent;
   }
