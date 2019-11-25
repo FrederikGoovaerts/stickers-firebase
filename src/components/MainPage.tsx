@@ -79,7 +79,11 @@ export class MainPage extends React.Component<MainPageProps, MainPageState> {
 
   spend = () => {
     const spending = toNumber(this.state.spendInput);
-    if (isInteger(spending) && spending <= this.state.availableCredits) {
+    if (
+      isInteger(spending) &&
+      spending > 0 &&
+      spending <= this.state.availableCredits
+    ) {
       this.props.firebase.addSpending(spending);
       this.setState({
         spendError: undefined,
